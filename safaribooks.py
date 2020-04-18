@@ -603,6 +603,11 @@ class SafariBooks:
             if not self.url_is_absolute(link):
                 if "cover" in link or "images" in link or "graphics" in link or \
                         link[-3:] in ["jpg", "peg", "png", "gif"]:
+                    # Image URL should be like this:
+                    # https://learning.oreilly.com/library/view/title/123456789123/Images/xxx.png
+                    # it seems that the link gives a .., so take it out
+                    if link.startswith("../"):
+                        link = link[3:]
                     link = urljoin(self.base_url, link)
                     if link not in self.images:
                         self.images.append(link)
